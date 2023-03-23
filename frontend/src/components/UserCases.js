@@ -5,10 +5,8 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import axios from 'axios';
 
 const UserCases = (note) => {
-
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageObjURL, setimageObjURL] = useState(null);
-
     if (note.note == '4'){
 
         const handleImageChange = (event) => {
@@ -64,17 +62,15 @@ const UserCases = (note) => {
                 <div className="printedimg-class">
                     <div className="row">
                         <div className="col">
-                            {/*<Image src={URL.createObjectURL(selectedImage)} fluid />*/}
                             {<Image src={imageObjURL} fluid />}
-                            {/*<img
-                                src={URL.createObjectURL(selectedImage)}
-                            />*/}
+
                         </div>
                     </div>
                 </div>
             </div>
         )
     }
+
 }
 
 export default UserCases

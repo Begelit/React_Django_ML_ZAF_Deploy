@@ -21,7 +21,7 @@ from rest_framework.decorators import api_view
 from .models import Model_V1 
 from .serializer import ModelV1Serializer
 
-#brain_tumor_model = keras.models.load_model('Models/Brain Tumor Detection/model/tf_model.h5')
+brain_tumor_model = keras.models.load_model('Models/Brain Tumor Detection/model/tf_model.h5')
 
 device = torch.device('cpu')  # gpu also works, but our models are fast enough for CPU
 s2t_models = OmegaConf.load('Models/Seech2Text/lib_stt/models.yml')
@@ -42,6 +42,7 @@ def getModelNote(request, pk):
         return Response(serializer.data)
     elif request.method == 'POST':
         ### BRAIN TUMOR DETECTION ###
+        
         if pk == '4':
             print("KEY", pk, type(pk))
             global brain_tumor_model
@@ -58,7 +59,9 @@ def getModelNote(request, pk):
             decoded_result = 'No Tumor' if armax_result == 0 else 'Yes Tumor'
             print(decoded_result)
             return Response({'status': 'success', 'result': decoded_result})
+        
         ### SPEECH TO TEXT ###
+        
         if pk == '6':
             global s2t_model, s2t_decoder
             buffer_bytes_array = request.FILES['binary_data'].read()
@@ -72,3 +75,4 @@ def getModelNote(request, pk):
                 decoded_output = s2t_decoder(example.cpu())
                 print(decoded_output)
             return Response({'status': 'success', 'result': decoded_output})
+        
